@@ -1,0 +1,17 @@
+編譯發生錯誤   Execution failed for task ':app:transformDexArchiveWithExternalLibsDexMergerForDebug'. 
+
+  \android\app\build.gradle 
+
+  android { 
+
+  defaultConfig { 
+
+   multiDexEnabled true    (加入該行) 
+
+Flutter run錯誤：Failure [INSTALL_FAILED_INSUFFICIENT_STORAGE] 
+
+  將Virtual   Device殺掉重建 
+
+apk檔案超過64k限制：.dex file cannot exceed 64K. 
+
+  Build.gradle  增加 multiDexEnabled true
