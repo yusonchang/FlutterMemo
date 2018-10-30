@@ -1,0 +1,47 @@
+安裝 
+
+  安裝說明 
+
+    https://flutter.io/setup-windows/ 
+
+    https://flutterchina.club/setup-windows/ 
+
+    Install Flutter SDK 
+
+    Install Android   Studio 
+
+    設定Android   設備 
+
+    設定 Android模擬器 
+
+設定編輯器 
+
+  體驗Flutter，看環境是否OK 
+
+第一個Flutter   App 
+
+  State less widgets是不可變的,這意味著它們的屬性不能改變-所有的值都是最終的. 
+
+  State ful widgets持有的狀態可能在widget生命週期中發生變化.實現一個stateful widget至少需要兩個類: 
+    一個StatefulWidget類。 
+    一個State類。StatefulWidget類本身是不變的，但是State類在widget生命週期中始終存在. 
+
+iOS 
+
+  終端機打開模擬器 
+
+    open -a Simulator 
+
+   VS Code打開模擬器 
+
+    flutter emulators --launch IOS Simulator 
+
+flutter升級 
+
+  flutter upgrade  
+
+  flutter packages upgrade  
+
+取得專案中的package 
+
+  flutter packages get
