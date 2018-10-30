@@ -1,0 +1,72 @@
+.cinematic  
+    .有多語系 
+
+.dev-team-1-cie 
+ .flutter_architecture_samples-master 
+    .有各種專案的架構 
+
+.flutter_programs-master 
+    .有各種Sample Code 
+
+.flutter_oschina-master 
+    .**可用的Sample project 
+    .https://github.com/lizhuoyuan/flutter_oschina 
+
+.flutter_study-master 
+    .有Sample Code及文件來源 
+    .https://github.com/chinabrant/flutter_study 
+
+.flutter_ui_challenge_flight_search-master 
+    .飛機航班查詢 
+
+.Flutter_YYeTs-master 
+    .*可用的Sample project，人人影視 
+    .https://github.com/PopeyeLau/Flutter_YYeTs 
+
+.flutter-by-example-master 
+    .有Sample Code 
+
+.Flutter-Ecommerce-App-master 
+    .*可用的Sample project 
+
+.flutter-examples-master 
+    .有各種Sample Code 
+
+.FlutterGithubClient-githubclient 
+    .抓取github個人資料及查詢users，取得個人的repo project 
+    .json、http、login 
+
+.flutter-mobile-master 
+    .redux手機購物、功能滿完整的，需加key.properties、google josn... 
+    .https://github.com/invoiceninja/flutter-mobile 
+
+.flutter-musicplayer-master 
+    .*選單layout可參考 
+
+.flutter-mobile-master 
+    .**開源發票，有很多程式，使用redux 
+    .https://github.com/invoiceninja/flutter-mobile 
+
+.flutter-musicplayer-master 
+    .*音樂撥放器，layout可參考 
+    .https://github.com/amangautam1/flutter-musicplayer 
+
+.flutterstarter-master 
+    .**可參考的起始專案，只有殼 
+    .https://github.com/felipecarvalho/flutterstarter 
+.plugins-master 
+    .**flutter官方pub packages及範例 
+    .https://github.com/flutter/plugins 
+
+.state_experiments-master 
+    .各種狀態管理方式 
+
+.uct-flutter-master 
+    .*課程查詢系統 
+
+.Youtube-Tutorials-master 
+    .各種Sample 
+
+.zhihu-flutter-master 
+    .*模仿知乎網站 
+    .https://github.com/HackSoul/zhihu-flutter 
