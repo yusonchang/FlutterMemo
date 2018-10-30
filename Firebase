@@ -1,0 +1,89 @@
+Firebase project  ID：  
+
+iOS軟體包ID：
+
+Android套件名稱：
+
+設定好後下載：GoogleService-Info.plist(iOS)、google-services.json(Android) 
+
+Firebase Admin SDK，Firebase 服務帳戶 
+
+Firebase控制台：https://console.firebase.google.com 
+
+Firebase文件：https://firebase.google.com/docs/flutter/setup?hl=zh-tw 
+
+**在Android上進行調試時，請使用設備或AVD和Google Play服務。否則您將無法進行身份驗證。 
+
+**專案需要設定SHA-1 
+
+可以使用keytool產生 
+
+User\.android>keytool -list -v -keystore debug.keystore -alias androiddebugkey -storepass android -keypass android 
+
+配置iOS 
+
+配置Android 
+
+  參考文件：https://pub.dartlang.org/packages/firebase_auth 
+
+  [project]/pubspec.yaml 
+
+  dependencies: 
+
+  firebase_auth: ^0.5.20 
+
+  [project]/android/build.gradle 
+
+  dependencies { 
+
+  classpath 'com.google.gms:google-services:3.2.0' 
+
+  google-services.json複製到[project]/android/app/目錄下 
+
+  [project]/android/app/build.gradle 
+
+  // ADD THIS AT THE BOTTOM 
+
+  apply plugin: 'com.google.gms.google-services' 
+
+  [project]\android\app\src\main\AndroidManifest.xml 
+
+  package要改成 firebase註冊的專案ID 
+
+  FCM功能要在intent-filter   tag   增加設定 
+
+  <intent-filter> 
+
+    <action android:name="FLUTTER_NOTIFICATION_CLICK" /> 
+
+     <category android:name="android.intent.category.DEFAULT" /> 
+
+  </intent-filter> 
+
+  Dart代碼： 
+
+  import 'package:firebase_auth/firebase_auth.dart'; 
+
+  初始化GoogleSignIn和FirebaseAuth： 
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn(); 
+
+  final FirebaseAuth _auth = FirebaseAuth.instance; 
+
+  您現在可以使用Firebase _auth在Dart代碼中進行身份驗證，例如 
+
+  Future<FirebaseUser> _handleSignIn() async { 
+
+   GoogleSignInAccount googleUser = await _googleSignIn.signIn(); 
+
+  GoogleSignInAuthentication googleAuth = await googleUser.authentication; 
+
+  FirebaseUser user = await _auth.signInWithGoogle( 
+
+  accessToken: googleAuth.accessToken, 
+
+   idToken: googleAuth.idToken, 
+
+  );} 
+
+ 
