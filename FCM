@@ -1,0 +1,123 @@
+https://firebase.googleblog.com/2017/11/whats-new-with-fcm-customizing-messages.html 
+
+FCM   Server   Portocols 
+
+  HTTP   v1   APP 
+
+  HTTP(舊版，改用v1) 
+
+  XMPP 
+
+授權發送請求 
+
+  HTTP請求標頭： 
+
+   Authorization: Bearer <access_token> 
+
+建立發送請求 
+
+  應用伺服器 =>   Firebase 
+
+  POST https://fcm.googleapis.com/v1/projects/myproject-xxx/messages:send HTTP/1.1 
+
+  請求標頭必須包含以下內容： 
+
+  Content-type: application/json 
+
+  Authorization: Bearer <valid Oauth 2.0 token for the service account of the Firebase project> 
+
+  request 
+
+    "message":{ 
+
+      "token" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...", 
+
+      "notification" : { 
+
+        "body" : "This is an FCM notification message!", 
+
+        "title" : "FCM Message", 
+
+    } 
+
+   } 
+
+HTTP response 
+
+  {    "name": "projects/myproject-b5ae1/messages/0:1500415314455276%31bd1c9631bd1c96"} 
+
+Topic發送格式略有不同 
+
+特定Device只能用舊的協定 
+
+設備組HTTP POST請求 
+
+  https://fcm.googleapis.com/fcm/send 
+
+  Content-Type:application/json 
+
+  Authorization:key=AIzaSyZ-1u...0GBYzPu7Udno5aA 
+
+  { 
+
+  "to": "aUniqueKey", 
+
+  "data": { 
+
+  "hello": "This is a Firebase Cloud Messaging Device Group Message!", 
+
+  } 
+
+  } 
+
+  設備組HTTP響應 
+
+  { 
+
+   "success": 2, 
+
+  "failure": 0 
+
+  } 
+
+接收client   APP   to    FCM   server 
+
+  <message id=""> 
+
+    <gcm xmlns="google:mobile:data"> 
+
+    { 
+
+        "category":"com.example.yourapp", // to know which app sent it 
+
+        "data": 
+
+        { 
+
+             "hello":"world", 
+
+        }, 
+
+        "message_id":"m-123", 
+
+        "from":"REGID" 
+
+    } 
+
+    </gcm> 
+
+  </message> 
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+    
+
+ 
