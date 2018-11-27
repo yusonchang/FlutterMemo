@@ -1,36 +1,128 @@
 import 'package:flutter/material.dart';
-import 'package:barcode_flutter/barcode_flutter.dart';
+// import 'package:barcode_flutter/barcode_flutter.dart';
+import 'barcode_flutter.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
+import 'dart:async';
+import 'dart:typed_data';
 
-void main() => runApp(new MyApp());
+void main() {
+  runApp(new MyApp());
+}
 
+class MyApp extends StatefulWidget {
+  
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-class MyApp extends StatelessWidget {
+class _MyAppState extends State<MyApp> {
+  String phoneNo;
+  bool isLoading = true;
+  String base64;
+  @override
+  void initState() {
+    super.initState();
+    isLoading = true;
+  }
+
+  toBarcode() {
+    setState(() {
+      print('toBarcode set loading is false ........................');
+      print('toBarcode set loading is false ........................');
+
+      var bytes = utf8.encode(this.phoneNo);
+      // base64 = CryptoUtils.bytesToBase64(bytes);
+      // FS230300490511
+      // RlMyMzAzMDA0OTA1MTE=
+      base64 = base64Encode(bytes);
+      this.isLoading = false;      
+    });
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return new MaterialApp(
+  //     title: 'Flutter Demo',
+  //     theme: new ThemeData(
+  //       primarySwatch: Colors.blue,
+  //     ),
+  //     home: new MyHomePage(codeList: [
+  //       new BarCodeItem(type: BarCodeType.Code128, codeStr: "FS23030049MDUxMQ==", description: "Code128", hasText: true),
+  //       new BarCodeItem(type: BarCodeType.Code128, codeStr: "123456MDUxMQ==", description: "Code128", hasText: true),
+  //     ],)
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
+    final phonenumber = TextField(
+      
+      decoration: InputDecoration(hintText: 'Enter text ...'),
+      onChanged: (value) {
+        this.phoneNo = value;
+      },
+    );
+    final loginButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: Material(
+        borderRadius: BorderRadius.circular(30.0),
+        shadowColor: Colors.lightBlueAccent.shade100,
+        elevation: 5.0,
+        child: MaterialButton(
+          minWidth: 200.0,
+          height: 42.0,
+          onPressed: () {
+            this.isLoading = false;
+            toBarcode();
+          },
+          color: Colors.lightBlueAccent,
+          child: Text(
+            'Pressed to Barcode...',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       ),
-      home: new MyHomePage(codeList: [
-        new BarCodeItem(type: BarCodeType.Code39, codeStr: "A123456789", description: "Code39 with text", hasText: true),
-        new BarCodeItem(type: BarCodeType.Code39, codeStr: "CODE39", description: "Code39", hasText: false),
-        new BarCodeItem(type: BarCodeType.Code93, codeStr: "BARCODE93", description: "Code93 with text", hasText: true),
-        new BarCodeItem(type: BarCodeType.Code93, codeStr: "BARCODE93", description: "Code93", hasText: false),
-        new BarCodeItem(type: BarCodeType.Code128, codeStr: "BARCODE128", description: "Code128 with text", hasText: true),
-        new BarCodeItem(type: BarCodeType.Code128, codeStr: "BARCODE128", description: "Code128", hasText: false),
-        new BarCodeItem(type: BarCodeType.CodeEAN8, codeStr: "65833254", description: "EAN8 with text", hasText: true),
-        new BarCodeItem(type: BarCodeType.CodeEAN8, codeStr: "65833254", description: "EAN8", hasText: false),
-        new BarCodeItem(type: BarCodeType.CodeEAN13, codeStr: "9501101530003", description: "EAN13 with text", hasText: true),
-        new BarCodeItem(type: BarCodeType.CodeEAN13, codeStr: "9501101530003", description: "EAN13", hasText: false),
-        new BarCodeItem(type: BarCodeType.CodeUPCA, codeStr: "123456789012", description: "UPCA with text", hasText: true),
-        new BarCodeItem(type: BarCodeType.CodeUPCA, codeStr: "123456789012", description: "UPCA", hasText: false),
-        new BarCodeItem(type: BarCodeType.CodeUPCE, codeStr: "00123457", description: "UPCE with text", hasText: true),
-        new BarCodeItem(type: BarCodeType.CodeUPCE, codeStr: "00123457", description: "UPCE", hasText: false),
-      ],) 
+    );
+    print('**************************isLogin=' + this.isLoading.toString());
+    print('**************************isLogin=' + this.isLoading.toString());
+    final content = Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: ListView(
+          shrinkWrap: true,
+          padding: EdgeInsets.only(left: 24.0, right: 24.0),
+          children: <Widget>[
+            SizedBox(height: 48.0),
+            phonenumber,
+            SizedBox(height: 24.0),
+            loginButton,
+            this.isLoading
+                ? new Text('')
+                : new BarCodeImage(
+                  // data: this.base64,
+                  data: this.phoneNo,
+                  codeType: BarCodeType.Code128,
+                  lineWidth: 2,
+                  barHeight: 100.0,
+                  hasText: true,
+                  onError: (error) {
+                    print("Generate barcode failed. error msg: $error");
+                  },
+                ),
+          ],
+        ),
+      ),
+    );
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: content,
     );
   }
+
 }
+
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.codeList}) : super(key: key);
@@ -45,42 +137,48 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title),
-      ),
-      body: new ListView(
-        children: widget.codeList.map((element) {
-          return new Padding(padding: const EdgeInsets.all(10.0), 
+        appBar: new AppBar(
+          title: new Text(widget.title),
+        ),
+        body: new ListView(
+            children: widget.codeList.map((element) {
+          return new Padding(
+            padding: const EdgeInsets.all(1.0),
             child: new Card(
-              child: new Column(
-                children: <Widget>[
-                  new Align(
-                    alignment: Alignment.centerLeft, 
-                    child: new Text(element.description, 
-                      textAlign: TextAlign.left, 
-                      style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.black45),
-                    ),
-                  ),
-                  new Center(child:
-                    new Container(padding: const EdgeInsets.all(10.0),
-                      child: new BarCodeImage(
-                        data:element.codeStr,
-                        codeType: element.type,
-                        lineWidth: 2.0,
-                        barHeight: 100.0,
-                        hasText: element.hasText,
-                        onError: (error) {
-                          print("Generate barcode failed. error msg: $error");
-                        },
-                      ),
-                    ) 
-                  )
-                ]
-              )
-          ),) ;
-        }
-      ).toList()
-    ));
+                child: new Column(children: <Widget>[
+              new Align(
+                alignment: Alignment.centerLeft,
+                child: new Text(
+                  element.description,
+                  textAlign: TextAlign.left,
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                      color: Colors.black45),
+                ),
+              ),
+              new Center(
+                  child: new Container(
+                padding: const EdgeInsets.all(10.0),
+                child: new BarCodeImage(
+                  data: element.codeStr,
+                  codeType: element.type,
+                  lineWidth: 2,
+                  barHeight: 100.0,
+                  hasText: element.hasText,
+                  onError: (error) {
+                    print("Generate barcode failed. error msg: $error");
+                  },
+                ),
+              )),
+              new Divider(),
+              new Divider(),
+              new Divider(),
+              new Divider(),
+              new Divider(),
+            ])),
+          );
+        }).toList()));
   }
 }
 
